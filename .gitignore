@@ -1,0 +1,61 @@
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Firebase Credentials
+service/firebase/firebase-credentials.json
+
+# Model Files (có thể bỏ comment nếu muốn commit)
+# *.h5
+# *.pkl
+# *.hdf5
+
+# Datasets - BẮT BUỘC PHẢI IGNORE
+*.csv
+*.lst
+# modal_ai/PhiUSIIL_Phishing_URL_Dataset_Updated.csv
+utils/ALL-phishing-links.lst
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.local
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints
+
+# Temporary
+*.tmp
+*.temp
+*.bak
+
