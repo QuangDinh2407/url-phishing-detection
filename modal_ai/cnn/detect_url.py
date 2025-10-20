@@ -22,13 +22,14 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # ---------- config ----------
-MODEL_PATH = "cnn_hybrid_model.h5"
-TOKENIZER_PKL = "tokenizer.pkl"
-SCALER_PKL = "scaler.pkl"
-SAFE_FEATURES_PKL = "safe_features.pkl"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "cnn_hybrid_model.h5")
+TOKENIZER_PKL = os.path.join(BASE_DIR, "tokenizer.pkl")
+SCALER_PKL = os.path.join(BASE_DIR, "scaler.pkl")
+SAFE_FEATURES_PKL = os.path.join(BASE_DIR, "safe_features.pkl")
 
 MAX_LEN = 150
-THRESHOLD = 0.3  # Giảm xuống để nhạy hơn với phishing
+THRESHOLD = 0.5
 
 # ---------- load artifacts ----------
 model = load_model(MODEL_PATH)
@@ -40,6 +41,45 @@ with open(SAFE_FEATURES_PKL, "rb") as f:
     SAFE_FEATURES = pickle.load(f)
 
 # ---------- helper ----------
+def normalize_url(url):
+    if not url:
+        return url
+    url = url.strip()
+    
+    # Thêm https:// nếu chưa có protocol (case-insensitive check)
+    url_lower = url.lower()
+    if not url_lower.startswith(('http://', 'https://')):
+        url = 'https://' + url
+    
+    # Parse URL
+    parsed = urlparse(url)
+    scheme = parsed.scheme.lower()
+    host = parsed.netloc.lower()
+    path = parsed.path
+    query = parsed.query
+    fragment = parsed.fragment
+    
+    # Loại bỏ www. ở đầu domain
+    if host.startswith('www.'):
+        host = host[4:]
+    
+    # Loại bỏ dấu / ở cuối path
+    if path.endswith('/') and len(path) > 1:
+        path = path.rstrip('/')
+    
+    # Nếu path rỗng hoặc chỉ có /, không thêm gì
+    if not path or path == '/':
+        path = ''
+    
+    # Rebuild URL
+    normalized = f"{scheme}://{host}{path}"
+    if query:
+        normalized += f"?{query}"
+    if fragment:
+        normalized += f"#{fragment}"
+    
+    return normalized
+
 def _safe_get(url, timeout=5):
     try:
         # print(f"Dang truy cap: {url}")  # Tat de khong spam khi test batch
@@ -174,6 +214,12 @@ def _to_ordered_vector(feat_dict, columns):
 
 # ---------- dự đoán ----------
 def predict_url(url, threshold=THRESHOLD, verbose=True):
+    # Lưu URL gốc để trả về
+    original_url = url
+    
+    # Chuẩn hóa URL trước khi xử lý
+    url = normalize_url(url)
+    
     feat47 = extract_full_47_features(url, timeout=7)
     X_num = _to_ordered_vector(feat47, SAFE_FEATURES)
     X_num_scaled = scaler.transform(X_num)
@@ -192,7 +238,9 @@ def predict_url(url, threshold=THRESHOLD, verbose=True):
     
     if verbose:
         print("\n" + "="*70)
-        print(f"URL: {url}")
+        print(f"URL goc: {original_url}")
+        if original_url != url:
+            print(f"URL chuan hoa: {url}")
         print("-"*70)
         print(f"KET QUA: {result}")
         print(f"Xac suat SAFE: {prob*100:.2f}%")
@@ -201,7 +249,7 @@ def predict_url(url, threshold=THRESHOLD, verbose=True):
         print("="*70)
     
     return {
-        "url": url,
+        "url": original_url,
         "result": result,
         "confidence": confidence,
         "label": label,
@@ -229,8 +277,18 @@ if __name__ == "__main__":
         print("  python detect_url.py http://www.teramill.com")
         print("\n" + "="*70)
         
+        # Test normalize_url
+        print("\n=== TEST CHUAN HOA URL ===")
+        test_urls = [
+            "youtube.com/",
+            "www.facebook.com",
+            "GOOGLE.COM",
+            "https://www.youtube.com/watch?v=123"
+        ]
+        for test in test_urls:
+            print(f"{test:40} -> {normalize_url(test)}")
+        print("="*70)
+        
         # Test phishing
-        predict_url("https://www.facebook.com", verbose=True)
-        predict_url("https://www.youtube.com", verbose=True)
-        predict_url("https://www.instagram.com", verbose=True)
+        predict_url("youtube.com/", verbose=True)
         predict_url("https://pub-0f913529526241fc8964926c7777865b.r2.dev/index.html", verbose=True)

@@ -14,7 +14,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 
 # ---------- config ----------
-CSV_PATH = "PhiUSIIL_Phishing_URL_Dataset_Updated.csv"
+CSV_PATH = "../PhiUSIIL_Phishing_URL_Dataset_Updated.csv"
 MODEL_OUT = "cnn_hybrid_model.h5"
 TOKENIZER_OUT = "tokenizer.pkl"
 SCALER_OUT = "scaler.pkl"

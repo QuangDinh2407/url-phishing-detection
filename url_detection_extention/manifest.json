@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "URL Phishing Detector",
+  "version": "1.0",
+  "description": "Kiểm tra và phát hiện URL lừa đảo",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon_detective_16.png",
+      "32": "icons/icon_detective_16.png",
+      "128": "icons/icon_detective_16.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon_detective_16.png",
+    "32": "icons/icon_detective_16.png",
+    "128": "icons/icon_detective_16.png"
+  }
+}
+
