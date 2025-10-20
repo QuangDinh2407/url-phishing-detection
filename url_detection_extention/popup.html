@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Phishing Detector</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="icons/icon_detective_32.png" alt="Detective Icon" class="header-icon">
+            <h1>Phát hiện URL lừa đảo</h1>
+        </div>
+        
+        <div class="content">
+            <div class="input-group">
+                <label for="urlInput">Nhập URL cần kiểm tra:</label>
+                <input 
+                    type="text" 
+                    id="urlInput" 
+                    placeholder="https://example.com"
+                    autocomplete="off"
+                >
+            </div>
+            
+            <button id="checkBtn" class="check-btn">
+                Kiểm tra URL
+            </button>
+            
+            <button id="getCurrentUrlBtn" class="secondary-btn">
+                Kiểm tra URL hiện tại
+            </button>
+            
+            <div id="result" class="result hidden">
+                <div class="result-content">
+                    <div id="resultIcon"></div>
+                    <div id="resultText"></div>
+                    <div id="resultDetails"></div>
+                </div>
+            </div>
+            
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Đang phân tích...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>
+

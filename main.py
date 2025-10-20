@@ -1,7 +1,19 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Query
+from fastapi.middleware.cors import CORSMiddleware
 from service.firebase import FirebaseService, get_firebase_service
+from modal_ai.cnn.detect_url import predict_url
+
 
 app = FastAPI(title="Phishing URL Detection API")
+
+# Thêm CORS middleware để cho phép extension gọi API
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Cho phép tất cả origins (có thể điều chỉnh để bảo mật hơn)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -62,15 +74,6 @@ def get_document(
 def get_all_documents(
     firebase: FirebaseService = Depends(get_firebase_service)
 ):
-    """
-    Lấy tất cả documents từ một collection
-    
-    Args:
-        collection: Tên collection
-    
-    Returns:
-        List documents hoặc lỗi
-    """
     try:
         documents = firebase.get_all_documents('url_black_list')
         return {
@@ -81,4 +84,17 @@ def get_all_documents(
         return {
             "success": False,
             "error": str(e)
+        }
+
+@app.post("/detect-url")
+def detect_url(url: str = Query(..., description="URL cần kiểm tra")):
+    print(f"URL: {url}")
+    try:
+        result = predict_url(url, verbose=False)
+        return result
+    except Exception as e:
+        return {
+            "error": str(e),
+            "url": url,
+            "result": "ERROR"
         }
