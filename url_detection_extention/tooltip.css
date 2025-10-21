@@ -1,0 +1,158 @@
+/* Tooltip styles cho URL Detection Extension */
+
+.url-detector-tooltip {
+    position: absolute;
+    z-index: 999999;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: 300px;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.url-detector-tooltip.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.url-detector-tooltip .tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.url-detector-tooltip .tooltip-icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.url-detector-tooltip .tooltip-icon-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.url-detector-tooltip .tooltip-title {
+    font-size: 14px;
+    flex: 1;
+}
+
+.url-detector-tooltip .tooltip-details {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #1f1f1f;
+    white-space: pre-line;
+}
+
+/* Loading state */
+.url-detector-tooltip.loading {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.url-detector-tooltip.loading .tooltip-title {
+    color: #1e40af;
+}
+
+/* Safe state */
+.url-detector-tooltip.safe {
+    border-color: #10b981;
+    background: #ecfdf5;
+}
+
+.url-detector-tooltip.safe .tooltip-title {
+    color: #047857;
+}
+
+/* Danger state */
+.url-detector-tooltip.danger {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+.url-detector-tooltip.danger .tooltip-title {
+    color: #dc2626;
+}
+
+.url-detector-tooltip.danger .tooltip-details {
+    color: #991b1b;
+    font-weight: 500;
+}
+
+/* Warning state */
+.url-detector-tooltip.warning {
+    border-color: #f59e0b;
+    background: #fffbeb;
+}
+
+.url-detector-tooltip.warning .tooltip-title {
+    color: #d97706;
+}
+
+/* Link highlighting */
+a.url-detector-checking {
+    outline: 2px solid #3b82f6 !important;
+    outline-offset: 2px !important;
+    background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+a.url-detector-safe {
+    outline: 2px solid #10b981 !important;
+    outline-offset: 2px !important;
+    background-color: rgba(16, 185, 129, 0.05) !important;
+}
+
+a.url-detector-danger {
+    outline: 2px solid #ef4444 !important;
+    outline-offset: 2px !important;
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    text-decoration: line-through !important;
+    position: relative;
+}
+
+a.url-detector-danger::after {
+    content: '⚠️';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+}
+
+/* Animation cho tooltip */
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.url-detector-tooltip:not(.hidden) {
+    animation: tooltipFadeIn 0.2s ease;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .url-detector-tooltip {
+        max-width: 250px;
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+    
+    .url-detector-tooltip .tooltip-icon {
+        font-size: 16px;
+    }
+}
+

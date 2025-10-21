@@ -5,7 +5,33 @@
   "description": "Kiểm tra và phát hiện URL lừa đảo",
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["tooltip.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/icon_safe_64.png",
+        "icons/icon_danger_64.png",
+        "icons/icon_warning_64.png",
+        "icons/icon_detective_32.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
   ],
   "action": {
     "default_popup": "popup.html",
