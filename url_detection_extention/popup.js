@@ -88,38 +88,39 @@ function showResult(type, icon, title, details) {
     result.classList.remove('hidden');
 }
 
-// Gọi API phát hiện URL lừa đảo
 async function callDetectionAPI(url) {
-    const API_URL = 'http://localhost:8000/detect-url';
-    
     try {
-        const response = await fetch(`${API_URL}?url=${encodeURIComponent(url)}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
+        const response = await chrome.runtime.sendMessage({
+            action: 'checkURL',
+            url: url
         });
         
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.success) {
+            throw new Error(response.error || 'Không thể kiểm tra URL');
         }
         
-        const data = await response.json();
+        const data = response.data;
         
-        // Xử lý kết quả từ API
         if (data.result === 'SAFE') {
             showResult(
                 'safe',
                 '<img src="icons/icon_safe_64.png" alt="Safe" class="result-icon">',
                 '✓ URL an toàn',
-                `Độ chắc chắn: ${(data.confidence * 100).toFixed(2)}%\nXác suất SAFE: ${(data.prob * 100).toFixed(2)}%`
+                `Độ chắc chắn: ${(data.confidence * 100).toFixed(2)}%\nXác suất SAFE: ${(data.prob * 100).toFixed(2)}%${data.fromCache ? '\n📦 (Từ cache)' : ''}`
             );
         } else if (data.result === 'PHISHING') {
             showResult(
                 'danger',
                 '<img src="icons/icon_danger_64.png" alt="Danger" class="result-icon">',
                 '⚠ CẢNH BÁO: URL lừa đảo!',
-                `Độ chắc chắn: ${(data.confidence * 100).toFixed(2)}%\nXác suất PHISHING: ${((1 - data.prob) * 100).toFixed(2)}%\n\nĐây có thể là trang web lừa đảo. KHÔNG truy cập!`
+                `Độ chắc chắn: ${(data.confidence * 100).toFixed(2)}%\nXác suất PHISHING: ${((1 - data.prob) * 100).toFixed(2)}%\n\nĐây có thể là trang web lừa đảo. KHÔNG truy cập!${data.fromCache ? '\n📦 (Từ cache)' : ''}`
+            );
+        } else if (data.result === 'ERROR') {
+            showResult(
+                'warning',
+                '<img src="icons/icon_warning_64.png" alt="Warning" class="result-icon">',
+                'Lỗi kết nối',
+                data.error || 'API không khả dụng. Vui lòng kiểm tra server đang chạy.'
             );
         } else {
             showResult(
@@ -131,12 +132,11 @@ async function callDetectionAPI(url) {
         }
         
     } catch (error) {
-        console.error('API Error:', error);
+        console.error('Error checking URL via background:', error);
         throw error;
     }
 }
 
-// Tự động focus vào input khi mở popup
 window.addEventListener('load', () => {
     urlInput.focus();
 });
