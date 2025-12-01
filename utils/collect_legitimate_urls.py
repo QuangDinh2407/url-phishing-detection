@@ -20,9 +20,18 @@ LEGITIMATE_COMPLEX_URLS = [
     "https://www.google.com/search?q=machine+learning+tutorial&sxsrf=APwXEde1234567890&source=hp&ei=AbCdEfGhIjKlMn&iflsig=AJiK0e8AAAAAZabcdefghijklmnopqrstuvwxyz&ved=0ahUKEwjx1234567890&uact=5&oq=machine+learning&gs_lcp=Cgdnd3Mtd2l6EAEYADIHCAAQigUQQw",
     "https://www.google.com/url?q=https://github.com/tensorflow/tensorflow&sa=D&source=editors&ust=1234567890&usg=AOvVaw0AbCdEfGhIjKlMnOpQrSt",
     
-    # Facebook - Login & OAuth
+    # Facebook - Login & OAuth (nhiều dạng URL)
     "https://www.facebook.com/login.php?skip_api_login=1&api_key=123456789012345&kid_directed_site=0&app_id=123456789012345&signed_next=1&next=https%3A%2F%2Fwww.facebook.com%2Fv18.0%2Fdialog%2Foauth%3Fclient_id%3D123456789012345&cancel_url=https%3A%2F%2Fexample.com%2F&display=page&locale=en_US&pl_dbl=0",
     "https://www.facebook.com/v18.0/dialog/oauth?client_id=123456789012345&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&state=AbCdEfGhIjKlMnOpQrStUvWxYz&scope=email,public_profile&response_type=code&auth_type=rerequest",
+    "https://www.facebook.com/",
+    "https://www.facebook.com/zuck",
+    "https://www.facebook.com/groups/123456789012345",
+    "https://www.facebook.com/pages/category/Product-Service/PageName-123456789012345",
+    "https://m.facebook.com/story.php?story_fbid=123456789&id=987654321",
+    "https://web.facebook.com/messages/t/123456789",
+    "https://www.facebook.com/watch/?v=123456789012345",
+    "https://www.facebook.com/marketplace/item/123456789012345",
+    "https://business.facebook.com/latest/home?asset_id=123456789012345",
     
     # Microsoft - Office 365 & Azure
     "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=12345678-1234-1234-1234-123456789abc&response_type=code&redirect_uri=https%3A%2F%2Fexample.com&response_mode=query&scope=openid%20profile%20email&state=AbCdEfGhIjKlMnOpQrStUvWxYz",
@@ -40,9 +49,23 @@ LEGITIMATE_COMPLEX_URLS = [
     "https://github.com/login/oauth/authorize?client_id=Iv1.1234567890abcdef&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&scope=repo%20user&state=AbCdEfGhIjKlMnOpQrStUvWxYz",
     "https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/keras/engine/training.py?ref=main&ts=2#L123-L456",
     
-    # YouTube - Watch & Embed links
+    # YouTube - Watch & Embed links (nhiều dạng URL uy tín)
     "https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PLrAXtmErZgOeiKm4sgNOknGvNjby9efdf&index=1&t=123s&ab_channel=RickAstley",
     "https://www.youtube.com/embed/dQw4w9WgXcQ?si=AbCdEfGhIjKlMnOp&autoplay=1&start=10&end=100&rel=0&modestbranding=1&controls=1",
+    "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+    "https://www.youtube.com/watch?v=9bZkp7q19f0&t=15s",
+    "https://www.youtube.com/channel/UCX6OQ3DkcsbYNE6H8uQQuVA",
+    "https://www.youtube.com/@MrBeast",
+    "https://www.youtube.com/playlist?list=PLrAXtmErZgOeiKm4sgNOknGvNjby9efdf",
+    "https://www.youtube.com/shorts/abcd1234567",
+    "https://youtu.be/dQw4w9WgXcQ?si=AbCdEfGhIjKlMnOp",
+    "https://m.youtube.com/watch?v=jNQXAC9IVRw",
+    "https://www.youtube.com/live/abc123xyz?feature=share",
+    "https://www.youtube.com/c/TensorFlow/videos",
+    "https://www.youtube.com/results?search_query=machine+learning+tutorial",
+    "https://www.youtube.com/feed/subscriptions",
+    "https://www.youtube.com/feed/trending",
+    "https://studio.youtube.com/channel/UCX6OQ3DkcsbYNE6H8uQQuVA/videos/upload?d=ud",
     
     # LinkedIn - Profile & OAuth
     "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com&state=AbCdEfGhIjKlMnOpQrSt&scope=r_liteprofile%20r_emailaddress%20w_member_social",
@@ -82,6 +105,93 @@ LEGITIMATE_COMPLEX_URLS = [
     
     # Reddit - OAuth
     "https://www.reddit.com/api/v1/authorize?client_id=AbCdEfGhIjKlMn&response_type=code&state=random_string&redirect_uri=https://example.com&duration=permanent&scope=read,submit,vote",
+    
+    # Instagram - Profile & Posts
+    "https://www.instagram.com/",
+    "https://www.instagram.com/p/ABC123xyz456/",
+    "https://www.instagram.com/accounts/login/?next=/explore/",
+    "https://www.instagram.com/explore/tags/machinelearning/",
+    "https://www.instagram.com/stories/username/1234567890123456789/",
+    
+    # TikTok - Videos
+    "https://www.tiktok.com/@username",
+    "https://www.tiktok.com/@username/video/1234567890123456789",
+    "https://vt.tiktok.com/ZSabcd123/",
+    
+    # Twitter/X - Thêm các dạng URL phổ biến
+    "https://x.com/elonmusk",
+    "https://x.com/i/topics/123456789",
+    
+    # Wikipedia - Các bài viết
+    "https://en.wikipedia.org/wiki/Machine_learning",
+    "https://vi.wikipedia.org/wiki/Tr%C3%AD_tu%E1%BB%87_nh%C3%A2n_t%E1%BA%A1o",
+    "https://en.wikipedia.org/w/index.php?title=Artificial_intelligence&action=edit",
+    
+    # Stack Overflow - Questions
+    "https://stackoverflow.com/questions/123456/how-to-learn-machine-learning",
+    "https://stackoverflow.com/users/123456/username",
+    
+    # Medium - Articles
+    "https://medium.com/@username/article-title-123abc",
+    "https://towardsdatascience.com/machine-learning-basics-123abc",
+    
+    # Netflix
+    "https://www.netflix.com/browse",
+    "https://www.netflix.com/watch/12345678",
+    "https://www.netflix.com/title/12345678",
+    
+    # Spotify
+    "https://open.spotify.com/track/1234567890abcdefghij",
+    "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M",
+    "https://open.spotify.com/artist/1234567890abcdefghij",
+    
+    # Apple
+    "https://www.apple.com/iphone/",
+    "https://apps.apple.com/us/app/appname/id123456789",
+    "https://appleid.apple.com/account",
+    
+    # Trang tin tức uy tín Việt Nam
+    "https://vnexpress.net/khoa-hoc",
+    "https://dantri.com.vn/giao-duc-huong-nghiep.htm",
+    "https://thanhnien.vn/giao-duc.html",
+    "https://tuoitre.vn/giao-duc.htm",
+    
+    # Trang tin tức quốc tế
+    "https://www.bbc.com/news",
+    "https://www.cnn.com/world",
+    "https://www.nytimes.com/section/technology",
+    
+    # E-commerce uy tín Việt Nam
+    "https://shopee.vn/search?keyword=laptop",
+    "https://tiki.vn/dien-thoai-may-tinh-bang/c1789",
+    "https://www.lazada.vn/products/product-name-i123456789.html",
+    
+    # Ngân hàng Việt Nam
+    "https://ebanking.vietcombank.com.vn/",
+    "https://online.mbbank.com.vn/",
+    "https://ib.vietinbank.vn/",
+    
+    # Giáo dục
+    "https://www.coursera.org/learn/machine-learning",
+    "https://www.udemy.com/course/python-for-data-science/",
+    "https://www.khanacademy.org/computing/computer-programming",
+    "https://www.edx.org/learn/artificial-intelligence",
+    
+    # Cloud Services
+    "https://console.cloud.google.com/home/dashboard?project=my-project-123456",
+    "https://console.aws.amazon.com/console/home?region=us-east-1",
+    "https://portal.azure.com/#home",
+    
+    # Developer Tools
+    "https://gitlab.com/username/project-name/-/blob/main/README.md",
+    "https://bitbucket.org/username/repository/src/master/",
+    "https://www.npmjs.com/package/package-name",
+    "https://pypi.org/project/tensorflow/",
+    
+    # Email Services
+    "https://mail.google.com/mail/u/0/#inbox",
+    "https://outlook.live.com/mail/0/inbox",
+    "https://mail.yahoo.com/d/folders/1",
 ]
 
 def save_urls_to_file(filename="utils/legitimate_complex_urls.txt"):

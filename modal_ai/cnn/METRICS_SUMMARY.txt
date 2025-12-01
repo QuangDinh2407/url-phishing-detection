@@ -1,0 +1,56 @@
+======================================================================
+                    MODEL EVALUATION SUMMARY
+======================================================================
+
+📊 OVERALL PERFORMANCE
+----------------------------------------------------------------------
+Accuracy:      0.9996 (99.96%)
+AUC Score:     1.0000
+
+📈 PHISHING DETECTION (Class 0)
+----------------------------------------------------------------------
+Precision:     1.0000 (100.00%)
+Recall:        0.9991 (99.91%)
+F1-Score:      0.9995
+Support:       20189 samples
+
+✅ LEGITIMATE DETECTION (Class 1)
+----------------------------------------------------------------------
+Precision:     0.9993 (99.93%)
+Recall:        1.0000 (100.00%)
+F1-Score:      0.9996
+Support:       26987 samples
+
+🔢 CONFUSION MATRIX
+----------------------------------------------------------------------
+True Positives:  20170 - Phishing correctly detected
+False Negatives:   19 - Phishing missed (DANGEROUS!)
+False Positives:    1 - Legitimate wrongly flagged
+True Negatives:  26986 - Legitimate correctly identified
+
+🎓 TRAINING INFORMATION
+----------------------------------------------------------------------
+Epochs Trained:        8
+Final Train Loss:      0.0011
+Final Train Accuracy:  0.9996
+Final Val Loss:        0.0015
+Final Val Accuracy:    0.9996
+Best Val Loss:         0.0014 (Epoch 5)
+
+💾 OUTPUT FILES
+----------------------------------------------------------------------
+✅ cnn_hybrid_model.h5 - Trained model
+✅ tokenizer.pkl - Character tokenizer
+✅ scaler.pkl - Feature scaler
+✅ safe_features.pkl - Selected features list
+✅ training_history.json - Training metrics by epoch
+✅ confusion_matrix.npy/.txt/.png - Confusion matrix
+✅ classification_report.json/.txt - Detailed metrics
+✅ roc_curve_data.json/.png - ROC curve
+✅ precision_recall_curve_data.json/.png - PR curve
+✅ training_curves.png - Loss/Accuracy plots
+✅ METRICS_SUMMARY.txt - This summary
+
+======================================================================
+Training completed successfully!
+======================================================================

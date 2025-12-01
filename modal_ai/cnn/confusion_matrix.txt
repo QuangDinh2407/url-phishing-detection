@@ -1,0 +1,17 @@
+CONFUSION MATRIX
+============================================================
+
+Format:
+                  Predicted
+              Legit(1)  Phishing(0)
+Actual Legit      TN        FP
+       Phishing   FN        TP
+
+Matrix:
+[[20170    19]
+ [    1 26986]]
+
+True Positives (TP):  20170 - Phishing correctly detected
+False Negatives (FN):    19 - Phishing missed (DANGEROUS!)
+False Positives (FP):     1 - Legit wrongly flagged
+True Negatives (TN):  26986 - Legit correctly identified

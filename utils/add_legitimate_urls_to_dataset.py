@@ -8,15 +8,16 @@ import pickle
 from pathlib import Path
 
 # Thêm parent directory vào path để import detect_url
-sys.path.insert(0, str(Path(__file__).parent.parent))
+BASE_DIR = Path(__file__).parent.parent
+sys.path.insert(0, str(BASE_DIR))
 
 from modal_ai.cnn.detect_url import extract_full_47_features
 from utils.collect_legitimate_urls import LEGITIMATE_COMPLEX_URLS
 
-# Paths
-CSV_PATH = "modal_ai/PhiUSIIL_Phishing_URL_Dataset_Updated.csv"
-CSV_BACKUP = "modal_ai/PhiUSIIL_Phishing_URL_Dataset_Updated_BACKUP.csv"
-SAFE_FEATURES_PKL = "modal_ai/cnn/safe_features.pkl"
+# Paths (dùng đường dẫn tuyệt đối từ thư mục gốc project)
+CSV_PATH = BASE_DIR / "modal_ai" / "PhiUSIIL_Phishing_URL_Dataset.csv"
+CSV_BACKUP = BASE_DIR / "modal_ai" / "PhiUSIIL_Phishing_URL_Dataset_BACKUP.csv"
+SAFE_FEATURES_PKL = BASE_DIR / "modal_ai" / "cnn" / "safe_features.pkl"
 
 def add_legitimate_urls_to_dataset():
     """

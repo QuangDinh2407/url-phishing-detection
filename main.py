@@ -20,78 +20,33 @@ app.add_middleware(
 def read_root():
     return {"message": "Hello FastAPI!"}
 
-
-@app.get("/test-firebase")
-def test_firebase(firebase: FirebaseService = Depends(get_firebase_service)):
-    """
-    Test endpoint để kiểm tra kết nối Firebase
-    
-    Ví dụ: GET /test-firebase?collection=users&doc_id=test123
-    """
-    return {
-        "message": "Firebase đã kết nối thành công!",
-        "status": "connected"
-    }
-
-
-@app.get("/document/{collection}/{doc_id}")
-def get_document(
-    collection: str, 
-    doc_id: str,
-    firebase: FirebaseService = Depends(get_firebase_service)
-):
-    """
-    Lấy một document từ Firestore
-    
-    Args:
-        collection: Tên collection
-        doc_id: ID của document
-    
-    Returns:
-        Document data hoặc lỗi
-    """
-    try:
-        document = firebase.get_document(collection, doc_id)
-        
-        if document:
-            return {
-                "success": True,
-                "data": document
-            }
-        else:
-            return {
-                "success": False,
-                "message": f"Không tìm thấy document {doc_id} trong collection {collection}"
-            }
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e)
-        }
-
-
-@app.get("/black-list")
-def get_all_documents(
-    firebase: FirebaseService = Depends(get_firebase_service)
-):
-    try:
-        documents = firebase.get_all_documents('url_black_list')
-        return {
-            "success": True,
-            "data": documents
-        }
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e)
-        }
-
 @app.post("/detect-url")
-def detect_url(url: str = Query(..., description="URL cần kiểm tra")):
-    print(f"URL: {url}")
+def detect_url(
+    url: str = Query(..., description="URL cần kiểm tra"),
+    firebase: FirebaseService = Depends(get_firebase_service)
+):
     try:
+        is_in_blacklist = firebase.check_url_exists(
+            url=url,
+            collection="url_black_list",
+            field_name="URL"
+        )
+        
+        if is_in_blacklist:
+            print(f"URL tìm thấy trong blacklist!")
+            return {
+                "url": url,
+                "result": "PHISHING",
+                "confidence": 1.0,
+                "message": "URL này đã được xác định là phishing"
+            }
+        
         result = predict_url(url, verbose=False)
+        if result.get("result") == "PHISHING":
+            firebase.add_url_to_blacklist(url)
+        
         return result
+        
     except Exception as e:
         return {
             "error": str(e),
